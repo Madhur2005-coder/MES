@@ -1,0 +1,22 @@
+ORG 0000H
+
+; -------- Clear Accumulator --------
+CLR A              ; A = 0000H
+
+; -------- Form 6600 logically --------
+MOV A, #60H        ; Load partial value
+ORL A, #0CH        ; OR with another part → logical construction
+MOV R0, A          ; Store intermediate result
+
+; -------- Form 43 logically --------
+CLR A              ; Clear A
+MOV A, #20H        ; Load base
+ORL A, #03H        ; OR to form 43
+ANL A, #3FH        ; Mask unwanted bits
+
+; -------- Combine both results --------
+ORL A, R0          ; A = 6643 (logical combination)
+
+HERE: SJMP HERE    ; Stop execution
+
+END
